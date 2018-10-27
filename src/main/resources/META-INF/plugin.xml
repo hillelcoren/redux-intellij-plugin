@@ -23,24 +23,27 @@
   </project-components>
 
 
-    <extensions defaultExtensionNs="com.intellij">
-        <intentionAction>
-            <className>com.hillelcoren.redux_plugin.ReduxProjectAction</className>
-            <category>Conditional Operator</category>
-            <descriptionDirectoryName>ConditionalOperatorConvertor</descriptionDirectoryName>
-
-        </intentionAction>
-    </extensions>
-
     <!--
   <actions>
     <action
-        id="ShowIntentionActions"
+        id="ShowPopupMenu"
         class="com.hillelcoren.redux_plugin.ReduxProjectAction"
         text="Test"
         description="description">
     </action>
   </actions>
     -->
+
+    <actions>
+        <!-- Add your actions here -->
+        <action id="com.hillelcoren.redux_plugin.ReduxProjectAction"
+            class="com.hillelcoren.redux_plugin.ReduxProjectAction" text="Redux"
+            description="Find middlewares, reducers, ...">
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+            <!-- <separator/> -->
+        </action>
+    </actions>
+
+
 
 </idea-plugin>
