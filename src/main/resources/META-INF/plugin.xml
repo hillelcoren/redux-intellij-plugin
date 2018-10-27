@@ -22,4 +22,25 @@
     </component>
   </project-components>
 
+
+    <extensions defaultExtensionNs="com.intellij">
+        <intentionAction>
+            <className>com.hillelcoren.redux_plugin.ReduxProjectAction</className>
+            <category>Conditional Operator</category>
+            <descriptionDirectoryName>ConditionalOperatorConvertor</descriptionDirectoryName>
+
+        </intentionAction>
+    </extensions>
+
+    <!--
+  <actions>
+    <action
+        id="ShowIntentionActions"
+        class="com.hillelcoren.redux_plugin.ReduxProjectAction"
+        text="Test"
+        description="description">
+    </action>
+  </actions>
+    -->
+
 </idea-plugin>
