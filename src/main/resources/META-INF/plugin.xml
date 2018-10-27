@@ -1,0 +1,25 @@
+<idea-plugin>
+  <id>com.hillelcoren.redux_plugin</id>
+  <name>Flutter Redux Plugin</name>
+  <vendor url="https://hillelcoren.com">Hillel Coren</vendor>
+
+  <description><![CDATA[
+      Some description of the plugin, what it does, so people can have a better idea if they want to use it
+    ]]></description>
+
+  <change-notes><![CDATA[
+      Release notes here
+    ]]>
+  </change-notes>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+       on how to target different products -->
+  <depends>com.intellij.modules.lang</depends>
+
+  <project-components>
+    <component>
+      <implementation-class>com.hillelcoren.redux_plugin.ReduxProjectComponent</implementation-class>
+    </component>
+  </project-components>
+
+</idea-plugin>
