@@ -1,0 +1,37 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+        maven {
+            url 'http://dl.bintray.com/jetbrains/intellij-plugin-service'
+        }
+    }
+    dependencies {
+        classpath "gradle.plugin.org.jetbrains:gradle-intellij-plugin:0.1.10"
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'org.jetbrains.intellij'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+intellij {
+    version '2018.1'
+    pluginName 'Flutter Reux'
+    plugins 'android'
+    updateSinceUntilBuild false
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+group 'YOUR MAVEN GROUP'
+version 'LIBRARY VERSION'

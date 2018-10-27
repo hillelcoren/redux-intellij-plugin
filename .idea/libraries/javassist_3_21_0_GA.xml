@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="javassist-3.21.0-GA">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2018.1/d082978a55b398ef544e7daee1dd6228b88dbfc1/ideaIC-2018.1/lib/javassist-3.21.0-GA.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2018.1/41575d90c6dfac0e36e5c9328b89ad85de1da2c1/ideaIC-2018.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
