@@ -1,5 +1,14 @@
 package com.hillelcoren.redux_plugin;
 import com.intellij.openapi.components.ProjectComponent;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.project.ProjectManager;
+import com.intellij.openapi.roots.ContentIterator;
+import com.intellij.openapi.roots.ProjectFileIndex;
+import com.intellij.openapi.vfs.LocalFileSystem;
+import com.intellij.openapi.vfs.VfsUtilCore;
+import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.util.indexing.FileBasedIndex;
+
 import org.jetbrains.annotations.NotNull;
 
 public class ReduxProjectComponent implements ProjectComponent {
@@ -10,6 +19,7 @@ public class ReduxProjectComponent implements ProjectComponent {
     @Override
     public void projectOpened() {
 
+        System.out.println("projectOpened()...");
     }
 
     @Override
@@ -19,9 +29,7 @@ public class ReduxProjectComponent implements ProjectComponent {
     @Override
     public void initComponent() {
 
-        System.out.println("THIS IS A TEST");
-
-
+        System.out.println("initComponent()...");
     }
 
     @Override

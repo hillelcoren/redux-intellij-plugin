@@ -1,38 +1,72 @@
 package com.hillelcoren.redux_plugin;
 
-
-import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
-import com.intellij.openapi.actionSystem.DefaultActionGroup;
 import com.intellij.openapi.editor.CaretModel;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.fileEditor.FileEditorManager;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.project.ProjectManager;
+import com.intellij.openapi.roots.ContentIterator;
+import com.intellij.openapi.vfs.VfsUtilCore;
+import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.openapi.vfs.VirtualFileAdapter;
+import com.intellij.openapi.vfs.VirtualFileFilter;
 
-public class ReduxProjectAction extends AnAction {
+import java.util.ArrayList;
 
-    @Override
-    public void actionPerformed(AnActionEvent e) {
+abstract class ReduxProjectAction extends AnAction {
 
-        System.out.println("actionPerformed");
 
-        Editor editor = e.getRequiredData(CommonDataKeys.EDITOR);
+    protected VirtualFile getFile(AnActionEvent event, String type) {
+
+        Editor editor = event.getRequiredData(CommonDataKeys.EDITOR);
+        editor.getSelectionModel().selectWordAtCaret(true);
+
         CaretModel caretModel = editor.getCaretModel();
         String selectedText = caretModel.getCurrentCaret().getSelectedText();
-
         System.out.println("selected: " + selectedText);
-        System.out.println("test: " + e.getPresentation().getText());
 
-        /*
-        DefaultActionGroup group = new DefaultActionGroup();
-        //DefaultActionGroup newGroup = new DefaultActionGroup("_New", true);
-        //newGroup.add(new ReduxProjectAction());
-        //group.add(newGroup);
-        group.addSeparator();
-        group.add(new ReduxProjectAction());
+        Project project = ProjectManager.getInstance().getOpenProjects()[0];
+        //FileEditorManager fileEditor = FileEditorManager.getInstance(project);
 
-        ActionManager.getInstance().createActionPopupMenu("", null);
-        */
+        VirtualFile rootFolder = project.getBaseDir();
+        VirtualFile srcFolder = rootFolder.findChild("lib");
 
+        ArrayList<VirtualFile> files = new ArrayList();
+
+        VfsUtilCore.iterateChildrenRecursively(srcFolder, new VirtualFileFilter() {
+            @Override
+            public boolean accept(VirtualFile file) {
+                if (file.getName().contains(type)) {
+                    return true;
+                }
+
+                return file.isDirectory();
+            }
+        }, new ContentIterator() {
+            @Override
+            public boolean processFile(VirtualFile file) {
+                if (! file.isDirectory()) {
+                    System.out.println("Process: " + file.toString());
+
+                    try {
+                        String fileContents = VfsUtilCore.loadText(file);
+                        if (fileContents.contains(selectedText)) {
+                            files.add(file);
+                        }
+                    } catch (Exception e) {
+
+                    }
+                }
+
+                return true;
+            }
+        });
+
+        return files.size() > 0 ? files.get(0) : null;
     }
+
+
 }

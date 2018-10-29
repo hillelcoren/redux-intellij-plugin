@@ -22,23 +22,15 @@
     </component>
   </project-components>
 
-
-    <!--
-  <actions>
-    <action
-        id="ShowPopupMenu"
-        class="com.hillelcoren.redux_plugin.ReduxProjectAction"
-        text="Test"
-        description="description">
-    </action>
-  </actions>
-    -->
-
     <actions>
-        <!-- Add your actions here -->
-        <action id="com.hillelcoren.redux_plugin.ReduxProjectAction"
-            class="com.hillelcoren.redux_plugin.ReduxProjectAction" text="Redux"
-            description="Find middlewares, reducers, ...">
+        <action id="com.hillelcoren.redux_plugin.ReduxProjectReducerAction"
+            class="com.hillelcoren.redux_plugin.ReduxProjectReducerAction" text="Redux - Reducer"
+            description="Go To Redux reducer">
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+        </action>
+        <action id="com.hillelcoren.redux_plugin.ReduxProjectMiddlewareAction"
+            class="com.hillelcoren.redux_plugin.ReduxProjectMiddlewareAction" text="Redux - Middleware"
+            description="Go To Redux middleware">
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
             <!-- <separator/> -->
         </action>
