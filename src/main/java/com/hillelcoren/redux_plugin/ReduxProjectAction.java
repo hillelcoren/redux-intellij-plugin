@@ -6,6 +6,7 @@ import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.editor.CaretModel;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.ScrollType;
+import com.intellij.openapi.fileEditor.FileEditor;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
@@ -25,10 +26,9 @@ abstract class ReduxProjectAction extends AnAction {
         Editor editor = event.getRequiredData(CommonDataKeys.EDITOR);
         editor.getSelectionModel().selectWordAtCaret(true);
 
-
         CaretModel caretModel = editor.getCaretModel();
         String selectedText = caretModel.getCurrentCaret().getSelectedText();
-        System.out.println("selected: " + selectedText);
+        System.out.println("selected text: " + selectedText);
 
         Project project = ProjectManager.getInstance().getOpenProjects()[0];
         //FileEditorManager fileEditor = FileEditorManager.getInstance(project);
@@ -36,18 +36,23 @@ abstract class ReduxProjectAction extends AnAction {
         VirtualFile rootFolder = project.getBaseDir();
         VirtualFile srcFolder = rootFolder.findChild("lib");
 
+        VirtualFile[] selectedFiles = FileEditorManager.getInstance(project).getSelectedFiles();
+        VirtualFile selectedFile = selectedFiles.length > 0 ? selectedFiles[0] : null;
+        System.out.println("selected files: " + selectedFile.toString());
+
         ArrayList<VirtualFile> files = new ArrayList();
 
         VfsUtilCore.iterateChildrenRecursively(srcFolder, new VirtualFileFilter() {
             @Override
             public boolean accept(VirtualFile file) {
+                if (selectedFile.equals(file)) {
+                    System.out.println("File Open: " + file.toString());
+                    return false;
+                }
+
                 if (file.getName().contains(type)) {
                     return true;
                 }
-
-                System.out.println("File: " + file.toString());
-                System.out.println("WS File: " + project.getWorkspaceFile().toString());
-
 
                 return file.isDirectory();
             }
@@ -55,11 +60,12 @@ abstract class ReduxProjectAction extends AnAction {
             @Override
             public boolean processFile(VirtualFile file) {
                 if (! file.isDirectory()) {
-                    //System.out.println("Process: " + file.toString());
+                    System.out.println("Process: " + file.toString());
 
                     try {
                         String fileContents = VfsUtilCore.loadText(file);
                         if (fileContents.contains(selectedText)) {
+                            System.out.println("MATCH");
                             files.add(file);
                         }
                     } catch (Exception e) {
