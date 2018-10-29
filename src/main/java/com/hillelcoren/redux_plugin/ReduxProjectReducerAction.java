@@ -28,33 +28,7 @@ public class ReduxProjectReducerAction extends ReduxProjectAction {
     @Override
     public void actionPerformed(AnActionEvent event) {
 
-        Editor editor = event.getRequiredData(CommonDataKeys.EDITOR);
-        editor.getSelectionModel().selectWordAtCaret(true);
-
-        CaretModel caretModel = editor.getCaretModel();
-        String selectedText = caretModel.getCurrentCaret().getSelectedText();
-        System.out.println("selected: " + selectedText);
-
-        VirtualFile file = getFile(event, "reducer");
-
-        try {
-            String fileContents = VfsUtilCore.loadText(file);
-            int index = fileContents.lastIndexOf(selectedText);
-
-            Project project = ProjectManager.getInstance().getOpenProjects()[0];
-            FileEditorManager fileEditor = FileEditorManager.getInstance(project);
-            fileEditor.openFile(file, true);
-
-            editor = fileEditor.getSelectedTextEditor();
-
-            caretModel = editor.getCaretModel();
-            caretModel.moveToOffset(index);
-
-            editor.getScrollingModel().scrollToCaret(ScrollType.CENTER);
-        } catch (Exception e) {
-
-        }
-
+        handleAction(event, "reducer");
     }
 
 }

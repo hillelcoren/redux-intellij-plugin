@@ -5,6 +5,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.editor.CaretModel;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.editor.ScrollType;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
@@ -23,6 +24,7 @@ abstract class ReduxProjectAction extends AnAction {
 
         Editor editor = event.getRequiredData(CommonDataKeys.EDITOR);
         editor.getSelectionModel().selectWordAtCaret(true);
+
 
         CaretModel caretModel = editor.getCaretModel();
         String selectedText = caretModel.getCurrentCaret().getSelectedText();
@@ -43,13 +45,17 @@ abstract class ReduxProjectAction extends AnAction {
                     return true;
                 }
 
+                System.out.println("File: " + file.toString());
+                System.out.println("WS File: " + project.getWorkspaceFile().toString());
+
+
                 return file.isDirectory();
             }
         }, new ContentIterator() {
             @Override
             public boolean processFile(VirtualFile file) {
                 if (! file.isDirectory()) {
-                    System.out.println("Process: " + file.toString());
+                    //System.out.println("Process: " + file.toString());
 
                     try {
                         String fileContents = VfsUtilCore.loadText(file);
@@ -68,5 +74,34 @@ abstract class ReduxProjectAction extends AnAction {
         return files.size() > 0 ? files.get(0) : null;
     }
 
+    protected void handleAction(AnActionEvent event, String type) {
+        Editor editor = event.getRequiredData(CommonDataKeys.EDITOR);
+        editor.getSelectionModel().selectWordAtCaret(true);
+
+        CaretModel caretModel = editor.getCaretModel();
+        String selectedText = caretModel.getCurrentCaret().getSelectedText();
+        System.out.println("selected: " + selectedText);
+
+        VirtualFile file = getFile(event, type);
+
+        try {
+            String fileContents = VfsUtilCore.loadText(file);
+            int index = fileContents.lastIndexOf(selectedText);
+
+            Project project = ProjectManager.getInstance().getOpenProjects()[0];
+            FileEditorManager fileEditor = FileEditorManager.getInstance(project);
+            fileEditor.openFile(file, true);
+
+            editor = fileEditor.getSelectedTextEditor();
+
+            caretModel = editor.getCaretModel();
+            caretModel.moveToOffset(index);
+
+            editor.getScrollingModel().scrollToCaret(ScrollType.CENTER);
+        } catch (Exception e) {
+
+        }
+
+    }
 
 }
