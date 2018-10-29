@@ -46,7 +46,6 @@ abstract class ReduxProjectAction extends AnAction {
             @Override
             public boolean accept(VirtualFile file) {
                 if (selectedFile.equals(file)) {
-                    System.out.println("File Open: " + file.toString());
                     return false;
                 }
 
@@ -60,12 +59,11 @@ abstract class ReduxProjectAction extends AnAction {
             @Override
             public boolean processFile(VirtualFile file) {
                 if (! file.isDirectory()) {
-                    System.out.println("Process: " + file.toString());
+                    //System.out.println("Process: " + file.toString());
 
                     try {
                         String fileContents = VfsUtilCore.loadText(file);
                         if (fileContents.contains(selectedText)) {
-                            System.out.println("MATCH");
                             files.add(file);
                         }
                     } catch (Exception e) {
