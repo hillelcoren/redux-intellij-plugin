@@ -23,16 +23,11 @@ repositories {
 }
 
 intellij {
-    version '0.1'
-    pluginName 'Reux'
+    version '2017.1'
+    pluginName 'Redux'
     plugins 'android'
     updateSinceUntilBuild false
     alternativeIdePath "/Applications/Android Studio.app/Contents/"
-}
-
-publishPlugin {
-    username intellijPublishUsername
-    password intellijPublishPassword
 }
 
 dependencies {
