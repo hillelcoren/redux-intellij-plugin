@@ -23,11 +23,16 @@ repositories {
 }
 
 intellij {
-    version '2017.1'
-    pluginName 'Flutter Reux'
+    version '0.1'
+    pluginName 'Reux'
     plugins 'android'
     updateSinceUntilBuild false
     alternativeIdePath "/Applications/Android Studio.app/Contents/"
+}
+
+publishPlugin {
+    username intellijPublishUsername
+    password intellijPublishPassword
 }
 
 dependencies {
