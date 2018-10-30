@@ -1,2 +1,2 @@
-# Flutter Redux IntelliJ Plugin
+# Redux IntelliJ Plugin
 

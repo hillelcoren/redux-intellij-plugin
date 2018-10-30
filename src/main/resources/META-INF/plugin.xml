@@ -25,14 +25,15 @@
     <actions>
         <action id="com.hillelcoren.redux_plugin.ReduxProjectReducerAction"
             class="com.hillelcoren.redux_plugin.ReduxProjectReducerAction" text="Redux - Reducer"
-            description="Go To Redux reducer">
+            description="Go To Redux Reducer">
+            <keyboard-shortcut first-keystroke="control alt R" second-keystroke="R" keymap="$default"/>
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
         </action>
         <action id="com.hillelcoren.redux_plugin.ReduxProjectMiddlewareAction"
             class="com.hillelcoren.redux_plugin.ReduxProjectMiddlewareAction" text="Redux - Middleware"
-            description="Go To Redux middleware">
+            description="Go To Redux Middleware">
+            <keyboard-shortcut first-keystroke="control alt R" second-keystroke="M" keymap="$default"/>
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
-            <!-- <separator/> -->
         </action>
     </actions>
 
