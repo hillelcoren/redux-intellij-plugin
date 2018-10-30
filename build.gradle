@@ -22,13 +22,26 @@ repositories {
     mavenCentral()
 }
 
+
 intellij {
     version '2017.1'
     pluginName 'Redux'
     plugins 'android'
     updateSinceUntilBuild false
     alternativeIdePath "/Applications/Android Studio.app/Contents/"
+
+    publish {
+        username intellijPublishUsername
+        password intellijPublishPassword
+    }
 }
+
+/*
+buildScan {
+    licenseAgreementUrl = 'https://gradle.com/terms-of-service';
+    licenseAgree = 'yes'
+}
+*/
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
