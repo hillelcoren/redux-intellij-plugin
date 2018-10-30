@@ -2,7 +2,7 @@
   <id>com.hillelcoren.redux_plugin</id>
   <name>Redux</name>
   <vendor url="https://hillelcoren.com">Hillel Coren</vendor>
-
+    <idea-version since-build="172"/>
   <description><![CDATA[
       The purpose of this plugin is to try to make it easier to navigate in a Redux app.
     ]]></description>
