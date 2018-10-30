@@ -6,6 +6,7 @@ import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.editor.CaretModel;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.ScrollType;
+import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.fileEditor.FileEditor;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.project.Project;
@@ -28,17 +29,19 @@ abstract class ReduxProjectAction extends AnAction {
 
         CaretModel caretModel = editor.getCaretModel();
         String selectedText = caretModel.getCurrentCaret().getSelectedText();
-        System.out.println("selected text: " + selectedText);
+
+        if (selectedText.isEmpty() || Character.isLowerCase(selectedText.charAt(0))) {
+            System.out.println("Lower case, skipping...");
+            return null;
+        }
 
         Project project = ProjectManager.getInstance().getOpenProjects()[0];
-        //FileEditorManager fileEditor = FileEditorManager.getInstance(project);
 
         VirtualFile rootFolder = project.getBaseDir();
         VirtualFile srcFolder = rootFolder.findChild("lib");
 
         VirtualFile[] selectedFiles = FileEditorManager.getInstance(project).getSelectedFiles();
         VirtualFile selectedFile = selectedFiles.length > 0 ? selectedFiles[0] : null;
-        System.out.println("selected files: " + selectedFile.toString());
 
         ArrayList<VirtualFile> files = new ArrayList();
 
@@ -63,6 +66,7 @@ abstract class ReduxProjectAction extends AnAction {
 
                     try {
                         String fileContents = VfsUtilCore.loadText(file);
+
                         if (fileContents.contains(selectedText)) {
                             files.add(file);
                         }
@@ -80,7 +84,8 @@ abstract class ReduxProjectAction extends AnAction {
 
     protected void handleAction(AnActionEvent event, String type) {
         Editor editor = event.getRequiredData(CommonDataKeys.EDITOR);
-        editor.getSelectionModel().selectWordAtCaret(true);
+        SelectionModel selectionModel = editor.getSelectionModel();
+        selectionModel.selectWordAtCaret(true);
 
         CaretModel caretModel = editor.getCaretModel();
         String selectedText = caretModel.getCurrentCaret().getSelectedText();
@@ -105,7 +110,6 @@ abstract class ReduxProjectAction extends AnAction {
         } catch (Exception e) {
 
         }
-
     }
 
 }
